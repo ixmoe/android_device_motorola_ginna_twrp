@@ -15,7 +15,7 @@
 #
 
 # Release name
-PRODUCT_RELEASE_NAME := liber
+PRODUCT_RELEASE_NAME := ginna
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_minimal.mk)
 
@@ -23,19 +23,19 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_minimal.mk)
 $(call inherit-product, vendor/omni/config/common.mk)
 
 # Inherit from hardware-specific part of the product configuration
-$(call inherit-product, device/motorola/liber/device.mk)
+$(call inherit-product, device/motorola/ginna/device.mk)
 
 ## Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := liber
-PRODUCT_NAME := omni_liber
+PRODUCT_DEVICE := ginna
+PRODUCT_NAME := omni_ginna
 PRODUCT_BRAND := Motorola
-PRODUCT_MODEL := liber
+PRODUCT_MODEL := ginna
 PRODUCT_MANUFACTURER := Motorola
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRODUCT_NAME="motorola one fusion +" \
-    BUILD_PRODUCT="motorola one fusion +" \
-    TARGET_DEVICE="motorola one fusion +"
+    PRODUCT_NAME="motorola e7" \
+    BUILD_PRODUCT="motorola e7" \
+    TARGET_DEVICE="motorola e7"
 
 # HACK: Set vendor patch level
 PRODUCT_PROPERTY_OVERRIDES += \

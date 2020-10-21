@@ -49,7 +49,7 @@ insmod $module_path/aw8646.ko
 firmware_file="focaltech-ft8756-0d-0000-liber.bin"
 
 
-touch_path=/sys$(cat $touch_class_path/$touch_product_string/path | awk -Fliber '{print $1}')
+touch_path=/sys$(cat $touch_class_path/$touch_product_string/path | awk -Fginna '{print $1}')
 wait_for_poweron
 echo $firmware_file > $touch_path/doreflash
 echo 1 > $touch_path/forcereflash

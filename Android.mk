@@ -25,7 +25,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),liber)
+ifeq ($(TARGET_DEVICE),ginna)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
 
