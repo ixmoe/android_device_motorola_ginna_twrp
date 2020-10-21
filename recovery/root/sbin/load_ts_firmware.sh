@@ -41,12 +41,11 @@ insmod $module_path/mmi_info.ko
 insmod $module_path/mmi_sys_temp.ko
 insmod $module_path/moto_f_usbnet.ko
 insmod $module_path/snd_smartpa_aw882xx.ko
-insmod $module_path/focaltech_0flash_mmi.ko
 
 cd $firmware_path
 touch_product_string=$(ls $touch_class_path)
-insmod $module_path/aw8646.ko
-firmware_file="focaltech-ft8756-0d-0000-liber.bin"
+insmod $module_path/chipone_tddi_mmi.ko
+firmware_file="chipone-tianma-ICNL9911S-0125-0000-ginna.bin"
 
 
 touch_path=/sys$(cat $touch_class_path/$touch_product_string/path | awk -Fginna '{print $1}')
