@@ -51,6 +51,7 @@ ENABLE_CPUSETS := true
 ENABLE_SCHEDBOOST := true
 TARGET_USES_64_BIT_BINDER := true
 BUILD_BROKEN_DUP_RULES := true
+TARGET_SUPPORTS_64_BIT_APPS := true
 
 # Kernel
 BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom ehci-hcd.park=3 lpm_levels.sleep_disabled=1
