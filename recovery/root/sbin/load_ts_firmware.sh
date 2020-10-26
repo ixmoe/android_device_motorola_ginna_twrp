@@ -2,11 +2,9 @@
 
 module_path=/sbin/modules
 
-touch_class_path=/sys/class/touchscreen
-touch_path=
+touch_path=/sys/chipone-tddi
 firmware_path=/vendor/firmware
-firmware_file=
-device=$(getprop ro.boot.device)
+firmware_file=chipone-tianma-ICNL9911S-0125-0000-ginna.bin
 
 wait_for_poweron()
 {
@@ -42,16 +40,10 @@ insmod $module_path/mmi_sys_temp.ko
 insmod $module_path/moto_f_usbnet.ko
 insmod $module_path/snd_smartpa_aw882xx.ko
 
-cd $firmware_path
-touch_product_string=$(ls $touch_class_path)
-insmod $module_path/chipone_tddi_mmi.ko
-firmware_file="chipone-tianma-ICNL9911S-0125-0000-ginna.bin"
-
-
-touch_path=/sys$(cat $touch_class_path/$touch_product_string/path | awk -Fginna '{print $1}')
 wait_for_poweron
-echo $firmware_file > $touch_path/doreflash
+
 echo 1 > $touch_path/forcereflash
+echo $firmware_path/$firmware_file > $touch_path/doreflash
 sleep 5
 echo 1 > $touch_path/reset
 
