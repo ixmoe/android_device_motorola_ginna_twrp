@@ -32,6 +32,7 @@ on fs
     chown system drmrpc /dev/qseecom
     chmod 0664 /dev/ion
     chown system system /dev/ion
+    start load_ts_firmware
     install_keyring
 
 on early-fs
@@ -132,7 +133,6 @@ on property:vendor.sys.listeners.registered=true
     start gatekeeper-1-0
     start servicemanager
     restart time_daemon
-    start load_ts_firmware
 
 on property:sys.usb.config=mtp,adb
     restart time_daemon
