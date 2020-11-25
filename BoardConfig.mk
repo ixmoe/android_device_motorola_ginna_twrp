@@ -55,7 +55,7 @@ TARGET_SUPPORTS_64_BIT_APPS := true
 
 # Kernel
 BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom ehci-hcd.park=3 lpm_levels.sleep_disabled=1
-BOARD_KERNEL_CMDLINE += androidboot.bootdevice=7824900.sdhci androidboot.usbconfigfs=true
+BOARD_KERNEL_CMDLINE += androidboot.bootdevice=7824900.sdhci androidboot.boot_devices=soc/7824900.sdhci androidboot.usbconfigfs=true androidboot.fastboot=1
 BOARD_KERNEL_CMDLINE += loop.max_part=7
 BOARD_KERNEL_CMDLINE += androidboot.veritymode=eio
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
@@ -90,10 +90,11 @@ TARGET_USERIMAGES_USE_F2FS := true
 # Super
 BOARD_SUPER_PARTITION_SIZE := 9730785280
 BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
-BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 4865392640
+BOARD_QTI_DYNAMIC_PARTITIONS_SIZE := 4814868352
 BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     system \
-    product
+    product \
+    vendor
 
 TARGET_NO_KERNEL := false
 TARGET_NO_RECOVERY := false
