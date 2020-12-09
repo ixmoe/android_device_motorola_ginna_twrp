@@ -21,5 +21,5 @@ soong_namespace {
 cc_library {
     name: "bootctrl.msm8953",
     defaults: ["bootctrl_hal_defaults"],
-    static_libs: ["libgptutils.ginna"],
+    static_libs: ["libgptutils"],
 }
