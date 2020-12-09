@@ -1,5 +1,5 @@
 #
-# Copyright 2017 The Android Open Source Project
+# Copyright 2020 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,9 +23,19 @@
 # *not* include it on all devices, so it is safe even with hardware-specific
 # components.
 
-LOCAL_PATH := device/motorola/ginna
+PLATFORM_PATH := device/motorola/ginna
+
+# Bootloader
+TARGET_BOOTLOADER_BOARD_NAME := SDM632
+TARGET_NO_BOOTLOADER := true
+TARGET_USES_UEFI := true
 
 # Platform
+TARGET_BOARD_PLATFORM := msm8953
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno506
+TARGET_USES_64_BIT_BINDER := true
+
+# Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
@@ -42,11 +52,7 @@ TARGET_2ND_CPU_VARIANT := generic
 TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a53
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-BOARD_USES_QCOM_HARDWARE := true
-TARGET_BOOTLOADER_BOARD_NAME := SDM632
-TARGET_BOARD_PLATFORM := msm8953
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno506
-TARGET_HAS_NO_SELECT_BUTTON := true
+# Enable CPUSets
 ENABLE_CPUSETS := true
 ENABLE_SCHEDBOOST := true
 TARGET_USES_64_BIT_BINDER := true
@@ -54,9 +60,26 @@ BUILD_BROKEN_DUP_RULES := true
 TARGET_SUPPORTS_64_BIT_APPS := true
 
 # Kernel
-BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom ehci-hcd.park=3 lpm_levels.sleep_disabled=1
-BOARD_KERNEL_CMDLINE += androidboot.bootdevice=7824900.sdhci androidboot.boot_devices=soc/7824900.sdhci androidboot.usbconfigfs=true androidboot.fastboot=1
-BOARD_KERNEL_CMDLINE += loop.max_part=7
+BOARD_BOOT_HEADER_VERSION := 2
+BOARD_KERNEL_CMDLINE := \
+    console=ttyMSM0,115200,n8 \
+    androidboot.console=ttyMSM0 \
+    androidboot.hardware=qcom \
+    user_debug=30 \
+    msm_rtb.filter=0x237 \
+    ehci-hcd.park=3 \
+    androidboot.bootdevice=7824900.sdhci \
+    lpm_levels.sleep_disabled=1 \
+    earlycon=msm_hsl_uart,0x78af000 \
+    androidboot.usbconfigfs=true \
+    loop.max_part=7 \
+    printk.devkmsg=on \
+    androidboot.hab.csv=8 \
+    androidboot.hab.product=ginna \
+    androidboot.hab.cid=50 \
+    androidboot.boot_devices=soc/7824900.sdhci
+# For the love of all that is holy, please do not include this in your ROM unless you really want TWRP to not work correctly!
+BOARD_KERNEL_CMDLINE += androidboot.fastboot=1
 BOARD_KERNEL_CMDLINE += androidboot.veritymode=eio
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x80000000
@@ -75,18 +98,14 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 
 # Partitions
-BOARD_FLASH_BLOCK_SIZE := 131072
-
 BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 BOARD_DTBOIMG_PARTITION_SIZE := 8388608
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 47689219072
+BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 47689219072
 BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
-TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
-
 
 # Super
 BOARD_SUPER_PARTITION_SIZE := 9730785280
@@ -97,23 +116,21 @@ BOARD_QTI_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     product \
     vendor
 
+# Recovery
+BOARD_HAS_NO_SELECT_BUTTON := true
+BOARD_HAS_LARGE_FILESYSTEM := true
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
+
+# A/B device flags
 TARGET_NO_KERNEL := false
 TARGET_NO_RECOVERY := false
+BOARD_USES_RECOVERY_AS_BOOT := false
+BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
 
 # Partitions (listed in the file) to be wiped under recovery.
 # TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery.fstab
-
-# Workaround for error copying vendor files to recovery ramdisk
-BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-TARGET_COPY_OUT_VENDOR := vendor
-TARGET_COPY_OUT_PRODUCT := product
-
-# Recovery
-BOARD_HAS_LARGE_FILESYSTEM := true
-BOARD_HAS_NO_SELECT_BUTTON := true
-
-# Use mke2fs to create ext4 images
-TARGET_USES_MKE2FS := true
 
 # tell update_engine to not change dynamic partition table during updates
 # needed since our qti_dynamic_partitions does not include
@@ -124,34 +141,44 @@ TARGET_ENFORCE_AB_OTA_PARTITION_LIST := true
 TARGET_INIT_VENDOR_LIB := libinit_$(TARGET_DEVICE)
 TARGET_RECOVERY_DEVICE_MODULES := libinit_$(TARGET_DEVICE)
 
-# Encryption
-PLATFORM_SECURITY_PATCH := 2099-12-31
-VENDOR_SECURITY_PATCH := 2099-12-31
-TW_INCLUDE_CRYPTO := true
-TW_INCLUDE_CRYPTO_FBE := true
-
 # TWRP specific build flags
+BOARD_HAS_NO_REAL_SDCARD := true
 RECOVERY_SDCARD_ON_DATA := true
 TARGET_RECOVERY_QCOM_RTC_FIX := true
 TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
-TW_EXCLUDE_SUPERSU := true
-TW_EXTRA_LANGUAGES := true
 TW_INCLUDE_NTFS_3G := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_MAX_BRIGHTNESS := 255
 TW_THEME := portrait_hdpi
 TARGET_RECOVERY_DEVICE_MODULES += android.hardware.boot@1.0
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
-TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 TW_NO_SCREEN_BLANK := true
-TW_USE_TOOLBOX := true
+# Encryption
+PLATFORM_VERSION := 16.1.0
+PLATFORM_SECURITY_PATCH := 2099-12-31
+VENDOR_SECURITY_PATCH := 2099-12-31
+TW_INCLUDE_CRYPTO := true
+BOARD_USES_QCOM_FBE_DECRYPTION := true
+
+# Extras
+TARGET_SYSTEM_PROP += $(PLATFORM_PATH)/system.prop
+
 BOARD_PROVIDES_GPTUTILS := true
 BOARD_SUPPRESS_SECURE_ERASE := true
+TW_USE_TOOLBOX := true
 TW_EXCLUDE_TWRPAPP := true
 TW_HAS_EDL_MODE := true
+
+# Asian region languages
+TW_EXTRA_LANGUAGES := true
+# TW_DEFAULT_LANGUAGE := zh_CN
+
+# Debug flags
 TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
-TW_NO_USB_STORAGE := true
-PLATFORM_VERSION := 16.1.0
 
 ALLOW_MISSING_DEPENDENCIES := true
+# Workaround for error copying vendor files to recovery ramdisk
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_VENDOR := vendor
+TARGET_COPY_OUT_PRODUCT := product
