@@ -32,13 +32,14 @@ on fs
     chown system drmrpc /dev/qseecom
     chmod 0664 /dev/ion
     chown system system /dev/ion
+    export LD_LIBRARY_PATH /sbin:/vendor/lib64:/vendor/lib64/hw
     start load_modules
     install_keyring
 
 on early-fs
     start vold
 
-service sbinqseecomd /sbin/qseecomd
+service sbinqseecomd /system/bin/qseecomd
     user root
     group root
     disabled
@@ -51,7 +52,7 @@ service hwservicemanager /system/bin/hwservicemanager
     onrestart setprop hwservicemanager.ready false
     seclabel u:r:recovery:s0
 
-service boot-1-0 /sbin/android.hardware.boot@1.0-service
+service boot-1-0 /system/bin/android.hardware.boot@1.0-service
     user root
     group root
     disabled
@@ -84,19 +85,19 @@ service keystore /system/bin/keystore /tmp/misc/keystore
     disabled
     seclabel u:r:recovery:s0
 
-service gatekeeper-1-0 /sbin/android.hardware.gatekeeper@1.0-service-qti
+service gatekeeper-1-0 /system/bin/android.hardware.gatekeeper@1.0-service-qti
     user root
     group root
     disabled
     seclabel u:r:recovery:s0
 
-service keymaster-4-0 /sbin/android.hardware.keymaster@4.0-service-qti
+service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service-qti
     user root
     group root
     disabled
     seclabel u:r:recovery:s0
 
-service logd /sbin/logd
+service logd /system/bin/logd
     user root
     group root
     disabled
