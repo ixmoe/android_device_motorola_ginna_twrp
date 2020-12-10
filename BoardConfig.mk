@@ -129,9 +129,6 @@ TARGET_NO_RECOVERY := false
 BOARD_USES_RECOVERY_AS_BOOT := false
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
 
-# Partitions (listed in the file) to be wiped under recovery.
-# TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery.fstab
-
 # tell update_engine to not change dynamic partition table during updates
 # needed since our qti_dynamic_partitions does not include
 # vendor and odm and we also dont want to AB update them
