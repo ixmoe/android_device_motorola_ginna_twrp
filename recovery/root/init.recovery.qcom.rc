@@ -32,7 +32,7 @@ on fs
     chown system drmrpc /dev/qseecom
     chmod 0664 /dev/ion
     chown system system /dev/ion
-    start load_ts_firmware
+    start load_modules
     install_keyring
 
 on early-fs
@@ -70,11 +70,11 @@ service keystore_auth /system/bin/keystore_auth
     disabled
     seclabel u:r:recovery:s0
 
-service load_ts_firmware /sbin/load_ts_firmware.sh
+service load_modules /system/bin/load_modules.sh
+    oneshot
     user root
     group root
     disabled
-    oneshot
     seclabel u:r:recovery:s0
 
 # keystore is started and stopped on demand by TWRP
