@@ -5,7 +5,7 @@ load()
 {
     is_fastboot_twrp=$(getprop ro.boot.fastboot)
     if [ ! -z "$is_fastboot_twrp" ]; then
-        insmod /vendor/lib/modules/aw8624.ko
+        # insmod /vendor/lib/modules/aw8624.ko
         insmod /vendor/lib/modules/chipone_tddi_mmi.ko
         insmod /vendor/lib/modules/exfat.ko
         insmod /vendor/lib/modules/fpc1020_mmi.ko
@@ -26,7 +26,7 @@ load()
         venpath="/dev/block/mapper/vendor$suffix"
         mount -t ext4 -o ro "$venpath" /v
         mkdir -p /vendor/lib/modules
-        cp /v/lib/modules/aw8624.ko /vendor/lib/modules/aw8624.ko
+        # cp /v/lib/modules/aw8624.ko /vendor/lib/modules/aw8624.ko
         cp /v/lib/modules/chipone_tddi_mmi.ko /vendor/lib/modules/chipone_tddi_mmi.ko
         cp /v/lib/modules/exfat.ko /vendor/lib/modules/exfat.ko
         cp /v/lib/modules/fpc1020_mmi.ko /vendor/lib/modules/fpc1020_mmi.ko
@@ -38,7 +38,7 @@ load()
         cp /v/lib/modules/snd_smartpa_aw882xx.ko /vendor/lib/modules/snd_smartpa_aw882xx.ko
         cp /v/lib/modules/utags.ko /vendor/lib/modules/utags.ko
         
-        insmod /vendor/lib/modules/aw8624.ko
+        # insmod /vendor/lib/modules/aw8624.ko
         insmod /vendor/lib/modules/chipone_tddi_mmi.ko
         insmod /vendor/lib/modules/exfat.ko
         insmod /vendor/lib/modules/fpc1020_mmi.ko
