@@ -37,7 +37,7 @@ load()
         cp /v/lib/modules/sensors_class.ko /vendor/lib/modules/sensors_class.ko
         cp /v/lib/modules/snd_smartpa_aw882xx.ko /vendor/lib/modules/snd_smartpa_aw882xx.ko
         cp /v/lib/modules/utags.ko /vendor/lib/modules/utags.ko
-        
+
         # insmod /vendor/lib/modules/aw8624.ko
         insmod /vendor/lib/modules/chipone_tddi_mmi.ko
         insmod /vendor/lib/modules/exfat.ko
