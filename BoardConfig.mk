@@ -134,11 +134,6 @@ TARGET_NO_RECOVERY := false
 BOARD_USES_RECOVERY_AS_BOOT := false
 BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
 
-# tell update_engine to not change dynamic partition table during updates
-# needed since our qti_dynamic_partitions does not include
-# vendor and odm and we also dont want to AB update them
-TARGET_ENFORCE_AB_OTA_PARTITION_LIST := true
-
 # Init
 TARGET_INIT_VENDOR_LIB := libinit_$(TARGET_DEVICE)
 TARGET_RECOVERY_DEVICE_MODULES := libinit_$(TARGET_DEVICE)

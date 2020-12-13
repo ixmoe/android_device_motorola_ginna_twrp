@@ -14,7 +14,6 @@
 # limitations under the License.
 #
 
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
 # Inherit from our custom product configuration
 $(call inherit-product, vendor/omni/config/common.mk)
 
