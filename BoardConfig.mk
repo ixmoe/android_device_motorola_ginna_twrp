@@ -74,12 +74,12 @@ BOARD_KERNEL_CMDLINE := \
     lpm_levels.sleep_disabled=1 \
     earlycon=msm_hsl_uart,0x78af000 \
     androidboot.usbconfigfs=true \
-    loop.max_part=7 \
     printk.devkmsg=on \
     androidboot.hab.csv=8 \
     androidboot.hab.product=ginna \
     androidboot.hab.cid=50 \
     androidboot.boot_devices=soc/7824900.sdhci
+# BOARD_KERNEL_CMDLINE += loop.max_part=7 # Removed to support Android 11 - NOTE: Max value is 255, but only 21 should currently be needed for TWRP
 # For the love of all that is holy, please do not include this in your ROM unless you really want TWRP to not work correctly!
 BOARD_KERNEL_CMDLINE += androidboot.fastboot=1
 BOARD_KERNEL_CMDLINE += androidboot.veritymode=eio
